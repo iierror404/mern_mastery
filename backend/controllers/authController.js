@@ -28,7 +28,7 @@ export const registerCtrl = async (req, res) => {
       password,
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
 
@@ -39,6 +39,8 @@ export const registerCtrl = async (req, res) => {
         name,
         email,
         token,
+        role: user.role,
+        accountStatus: user.accountStatus,
         createdAt: user.createdAt
       },
     });
@@ -92,7 +94,7 @@ export const loginCtrl = async (req, res) => {
         message: "Invalid Email or Password.",
       });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
 
@@ -103,20 +105,19 @@ export const loginCtrl = async (req, res) => {
         name: user.name,
         email: user.email,
         createdAt: user.createdAt,
+        accountStatus: user.accountStatus,
         token,
+        role: user.role
       },
     });
   } catch (error) {
-    console.log(error); // خليها للتيرمنال مالتك
+    console.log(error);
 
-    // إذا كان الخطأ من نوع ValidationError مال Mongoose 🕵️‍♂️
     if (error.name === "ValidationError") {
-      // نأخذ بس أول رسالة خطأ تطلع (مثلاً: Please fill a valid email address)
       const message = Object.values(error.errors).map((val) => val.message)[0];
       return res.status(400).json({ success: false, message });
     }
 
-    // إذا كان الإيميل مكرر (MongoServerError: E11000)
     if (error.code === 11000) {
       return res
         .status(400)

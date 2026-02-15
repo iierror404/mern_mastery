@@ -36,6 +36,8 @@ const AuthPage = () => {
       localStorage.setItem("name", name);
       localStorage.setItem("email", email);
       localStorage.setItem("token", res.data.user.token);
+      localStorage.setItem("role", res.data.user.role);
+      localStorage.setItem("status", res.data.user.accountStatus);
       localStorage.setItem("createdAt", res.data.user.createdAt);
 
       setUser(res.data.user);
@@ -69,6 +71,8 @@ const AuthPage = () => {
       localStorage.setItem("name", res.data.user.name);
       localStorage.setItem("email", res.data.user.email);
       localStorage.setItem("token", res.data.user.token);
+      localStorage.setItem("role", res.data.user.role);
+      localStorage.setItem("status", res.data.user.accountStatus);
       localStorage.setItem("createdAt", res.data.user.createdAt);
       
       setUser(res.data.user)

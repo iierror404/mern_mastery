@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
     const savedName = localStorage.getItem("name");
     const savedEmail = localStorage.getItem("email");
     const savedToken = localStorage.getItem("token");
+    const savedRole = localStorage.getItem("role");
+    const savedStatus = localStorage.getItem("status");
     const savedCreatedAt = localStorage.getItem("createdAt");
 
     if (savedName && savedEmail && savedToken) {
@@ -17,6 +19,8 @@ export const AuthProvider = ({ children }) => {
         name: savedName,
         email: savedEmail,
         token: savedToken,
+        role: savedRole,
+        accountStatus: savedStatus,
         createdAt: savedCreatedAt,
       });
     }

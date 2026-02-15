@@ -5,13 +5,13 @@ import {
   editProductCtrl,
   getAllProcuctsCtrl,
 } from "../controllers/productController.js";
-import { protectedRoute } from "../middlewares/authMiddleware.js";
+import { onlyAdmin, protectedRoute } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/create", protectedRoute, createProductCtrl);
+router.post("/create", protectedRoute, onlyAdmin, createProductCtrl);
 router.get("/all", getAllProcuctsCtrl);
-router.delete("/del-product/:id", protectedRoute,deleteProductCtrl);
-router.put("/edit-product/:id", protectedRoute,editProductCtrl);
+router.delete("/del-product/:id", protectedRoute, deleteProductCtrl);
+router.put("/edit-product/:id", protectedRoute, editProductCtrl);
 
 export default router;
